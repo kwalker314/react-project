@@ -3,14 +3,6 @@ import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
 const NewExpense = (props) => {
-	const submitExpenseDataHandler = (submittedExpense) => {
-		const expenseData = {
-			...submittedExpense,
-			id: Math.random().toString(),
-		};
-		props.onSubmitNewExpense(expenseData);
-	};
-
 	let [addExpenseFormExpanded, toggleForm] = useState(false);
 
 	const collapseForm = () => {
@@ -19,6 +11,15 @@ const NewExpense = (props) => {
 
 	const expandForm = () => {
 		toggleForm(true);
+	};
+
+	const submitExpenseDataHandler = (submittedExpense) => {
+		const expenseData = {
+			...submittedExpense,
+			id: Math.random().toString(),
+		};
+		props.onSubmitNewExpense(expenseData);
+		collapseForm();
 	};
 
 	return (
