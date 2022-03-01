@@ -1,31 +1,34 @@
 import React, { useState } from "react";
+import { Expense } from "../Expense";
 import "./ExpenseForm.css";
 
-const ExpenseForm = (props) => {
+const ExpenseForm = (props: {
+	onSubmitExpenseData: Function;
+	onCancelClick: Function;
+}) => {
 	let [enteredTitle, setEnteredTitle] = useState("");
 	let [enteredAmount, setEnteredAmount] = useState("");
 	let [enteredDate, setEnteredDate] = useState("");
 
-	const titleChangeHandler = (event) => {
+	const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEnteredTitle(event.target.value);
 	};
-	const amountChangeHandler = (event) => {
+	const amountChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEnteredAmount(event.target.value);
 	};
-	const dateChangeHandler = (event) => {
+	const dateChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setEnteredDate(event.target.value);
 	};
 
-	const submitHandler = (event) => {
+	const submitHandler = (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 
-		const expenseData = {
+		props.onSubmitExpenseData({
 			title: enteredTitle,
-			amount: enteredAmount,
+			amount: +enteredAmount,
 			date: new Date(enteredDate),
-		};
-
-		props.onSubmitExpenseData(expenseData);
+			id: Math.random().toString(),
+		});
 
 		setEnteredTitle("");
 		setEnteredAmount("");
@@ -73,7 +76,7 @@ const ExpenseForm = (props) => {
 				</div>
 			</div>
 			<div className="new-expense__actions">
-				<button type="cancel" onClick={cancelHandler}>
+				<button type="reset" onClick={cancelHandler}>
 					Cancel
 				</button>
 				<button type="submit">Add Expense</button>

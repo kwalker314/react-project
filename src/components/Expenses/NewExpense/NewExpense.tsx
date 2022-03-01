@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { Expense } from "../Expense";
 import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
-const NewExpense = (props) => {
+const NewExpense = (props: { onSubmitNewExpense: Function }) => {
 	let [addExpenseFormExpanded, toggleForm] = useState(false);
 
 	const collapseForm = () => {
@@ -13,12 +14,12 @@ const NewExpense = (props) => {
 		toggleForm(true);
 	};
 
-	const submitExpenseDataHandler = (submittedExpense) => {
+	const submitExpenseDataHandler = (submittedExpense: Expense) => {
 		const expenseData = {
 			...submittedExpense,
 			id: Math.random().toString(),
 		};
-		props.onSubmitNewExpense(expenseData);
+		props.onSubmitNewExpense(submittedExpense);
 		collapseForm();
 	};
 
